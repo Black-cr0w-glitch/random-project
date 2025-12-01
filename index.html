@@ -3,59 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Facts</title>
+    <title>Fancy Random Facts</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f7f7f7;
+            background: linear-gradient(135deg, #6a5acd, #00bcd4);
+            background-size: 200% 200%;
+            animation: bgmove 12s ease infinite;
+        }
+
+        @keyframes bgmove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
             text-align: center;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 100%;
-            max-width: 600px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            color: #333;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
         .fact {
-            font-size: 1.5rem;
-            color: #555;
-            margin-top: 20px;
-            min-height: 80px;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            min-height: 100px;
+            transition: opacity 0.4s ease;
         }
 
         button {
-            background-color: #007bff;
-            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 12px;
             border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 5px;
             cursor: pointer;
-            margin-top: 30px;
-            transition: background-color 0.3s;
+            background: #ffffff;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.3s;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background: #f0f0f0;
+            transform: scale(1.03);
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         .category {
-            font-size: 1rem;
-            color: #777;
             margin-top: 10px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Bigger buttons & text for mobile */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .fact { font-size: 1.2rem; }
+            button { font-size: 1.1rem; padding: 14px; }
         }
     </style>
 </head>
@@ -63,41 +100,53 @@
 
     <div class="container">
         <h1>Random Facts</h1>
-        <div id="fact" class="fact">Click the button to get a random fact!</div>
-        <button onclick="getRandomFact()">Get Random Fact</button>
+        <div id="fact" class="fact">Tap the button to get a fact!</div>
+        <button onclick="getRandomFact()">🎲 New Random Fact</button>
         <div id="category" class="category"></div>
     </div>
 
     <script>
-        // Random facts stored inside the HTML file
         const facts = {
             animals: [
                 "Cats can make over 100 different sounds.",
-                "Elephants are the only mammals that can't jump.",
-                "A snail can sleep for up to three years."
+                "Octopuses have three hearts.",
+                "A group of flamingos is called a 'flamboyance'.",
+                "Turtles can breathe through their butts."
             ],
             space: [
                 "A day on Venus is longer than a year on Venus.",
-                "There are more stars in the universe than grains of sand on Earth.",
-                "Neutron stars can spin 600 times per second."
+                "Neutron stars can spin 600 times per second.",
+                "There may be more universes — not just one.",
+                "95% of space is completely invisible to us."
             ],
             history: [
-                "The Eiffel Tower can grow over 15 cm during summer heat.",
-                "The first computer bug was an actual moth stuck in a computer.",
-                "Napoleon was once attacked by a horde of rabbits."
+                "The first computer bug was an actual moth found in 1947.",
+                "Napoleon was once attacked by a horde of rabbits.",
+                "Ancient Romans used powdered mouse brains as toothpaste.",
+                "The shortest war in history lasted only 38 minutes."
             ]
         };
 
         function getRandomFact() {
-            const categories = Object.keys(facts);
-            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-            const randomFact = facts[randomCategory][Math.floor(Math.random() * facts[randomCategory].length)];
+            const factBox = document.getElementById("fact");
 
-            document.getElementById("fact").textContent = randomFact;
-            document.getElementById("category").textContent = "Category: " + randomCategory;
+            // Fade-out effect
+            factBox.style.opacity = 0;
+
+            setTimeout(() => {
+                const categories = Object.keys(facts);
+                const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+                const randomFact = facts[randomCategory][Math.floor(Math.random() * facts[randomCategory].length)];
+
+                factBox.textContent = randomFact;
+                document.getElementById("category").textContent = "Category: " + randomCategory;
+
+                // Fade-in effect
+                factBox.style.opacity = 1;
+
+            }, 300);
         }
     </script>
 
 </body>
 </html>
-
