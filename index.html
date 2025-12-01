@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .fact {
+            font-size: 1.5rem;
+            color: #555;
+            margin-top: 20px;
+            min-height: 80px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .category {
+            font-size: 1rem;
+            color: #777;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Random Facts</h1>
+        <div id="fact" class="fact">Click the button to get a random fact!</div>
+        <button onclick="getRandomFact()">Get Random Fact</button>
+        <div id="category" class="category"></div>
+    </div>
+
+    <script>
+        // Random facts stored inside the HTML file
+        const facts = {
+            animals: [
+                "Cats can make over 100 different sounds.",
+                "Elephants are the only mammals that can't jump.",
+                "A snail can sleep for up to three years."
+            ],
+            space: [
+                "A day on Venus is longer than a year on Venus.",
+                "There are more stars in the universe than grains of sand on Earth.",
+                "Neutron stars can spin 600 times per second."
+            ],
+            history: [
+                "The Eiffel Tower can grow over 15 cm during summer heat.",
+                "The first computer bug was an actual moth stuck in a computer.",
+                "Napoleon was once attacked by a horde of rabbits."
+            ]
+        };
+
+        function getRandomFact() {
+            const categories = Object.keys(facts);
+            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+            const randomFact = facts[randomCategory][Math.floor(Math.random() * facts[randomCategory].length)];
+
+            document.getElementById("fact").textContent = randomFact;
+            document.getElementById("category").textContent = "Category: " + randomCategory;
+        }
+    </script>
+
+</body>
+</html>
 
